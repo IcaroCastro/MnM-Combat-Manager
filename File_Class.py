@@ -19,6 +19,7 @@ class File:
                                        'FORTITUDE': int(input('Fortitude: ')),
                                        'TOUGHNESS': int(input('Toughness: ')),
                                        'WILL': int(input('Will: '))}}
+                break
             except ValueError:
                 print('Only integers are supported.')
                 continue
