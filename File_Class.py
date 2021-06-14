@@ -17,7 +17,8 @@ class File:
                       'PARRY': '',
                       'FORTITUDE': '',
                       'TOUGHNESS': '',
-                      'WILL': ''}
+                      'WILL': '',
+                      'init': ''}
 
         self.name = input('Character Name: ')
         try:
@@ -52,7 +53,8 @@ class File:
                               'PARRY': int(input('Parry: ')),
                               'FORTITUDE': int(input('Fortitude: ')),
                               'TOUGHNESS': int(input('Toughness: ')),
-                              'WILL': int(input('Will: '))}
+                              'WILL': int(input('Will: ')),
+                              'init': int(input('Initiative: '))}
                 break
             except ValueError:
                 print('Only integers are supported.')
