@@ -22,6 +22,13 @@ class Master:
                     print('-'*30)
                     continue
         self.init_list()
+        print('=-' * 30 + '=\n' +
+              '         Starting Combat       \n' +
+              '=-' * 30 + '=\n')
+        while True:
+            self.display()
+            act = input('What do you want to do? Damage (1), Change Initative Order (2), Grant Condition (3), '
+                        'Heal (4), Define Condition (5), End Combat (6).  ')
 
     def chars(self):
         char = File()
@@ -54,4 +61,10 @@ class Master:
                 print('-' * 30)
                 self.init.clear()
                 continue
+
+    def display(self):
+        for chars in self.init:
+            print(f'{chars} {self.char_list[chars].incapac} // {self.char_list[chars].conds} '
+                  f'-{self.char_list[chars].dmgpe} // {self.char_list[chars].circ} ({self.char_list[chars].circ_comm})')
+
 Master()
