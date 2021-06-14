@@ -6,18 +6,19 @@ class File:
         self.conds = list()
         self.dmgc = list()
         self.stats = {'STR': '',
-                              'AGI': '',
-                              'FGT': '',
-                              'AWA': '',
-                              'STA': '',
-                              'DEX': '',
-                              'INT': '',
-                              'PRE': '',
-                              'DODGE': '',
-                              'PARRY': '',
-                              'FORTITUDE': '',
-                              'TOUGHNESS': '',
-                              'WILL': ''}
+                      'AGI': '',
+                      'FGT': '',
+                      'AWA': '',
+                      'STA': '',
+                      'DEX': '',
+                      'INT': '',
+                      'PRE': '',
+                      'DODGE': '',
+                      'PARRY': '',
+                      'FORTITUDE': '',
+                      'TOUGHNESS': '',
+                      'WILL': ''}
+
         self.name = input('Character Name: ')
         try:
             self.getstats(self.name)
@@ -30,7 +31,6 @@ class File:
         treat = data.split('\n')
         file.close()
         del data, file
-        keys = list()
         for stat in treat:
             for key in self.stats.keys():
                 if key in stat:
@@ -93,6 +93,3 @@ class File:
         self.dmgc.append(condit)
         if 4 in self.dmgc or self.dmgc.count(3) > 1:
             self.incapac = True
-
-a = File()
-print(a.stats)
