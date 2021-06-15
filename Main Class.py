@@ -5,6 +5,9 @@ class Master:
     def __init__(self):
         self.char_list = dict()
         self.init = list()
+        self.condict = dict()
+        self.cond_dic()
+        print(self.condict)
         done = False
         while not done:
             self.chars()
@@ -66,5 +69,17 @@ class Master:
         for chars in self.init:
             print(f'{chars} {self.char_list[chars].incapac} // {self.char_list[chars].conds} '
                   f'-{self.char_list[chars].dmgpe} // {self.char_list[chars].circ} ({self.char_list[chars].circ_comm})')
+
+    def cond_dic(self):
+        file = open('ConditDictionary', 'r')
+        data = file.read()
+        file.close()
+        treat1 = data.split('\n')
+        treat2 = list()
+        for elem in treat1:
+            treat2.append(elem.split('---'))
+        for item in treat2:
+            self.condict[item[0]] = item[1]
+
 
 Master()
