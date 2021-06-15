@@ -6,6 +6,7 @@ class File:
         self.conds = list()
         self.dmgc = list()
         self.dmgpe = 0
+        self.stabdice = [0, 0]
         self.stats = {'STR': '',
                       'AGI': '',
                       'FGT': '',
@@ -66,13 +67,12 @@ class File:
         file.close()
 
     def damage(self):
-        self.dmgpe = 0
-        for _ in self.dmgc:
-            self.dmgpe += 1
-        if 2 in self.dmgc and 'Dazed' not in self.conds:
-            self.conds.append('Dazed')
-        if 3 in self.dmgc and 'Staggered' not in self.conds:
-            self.conds.append('Staggered')
+        if self.incapac == '*INCAPACITATED*':
+            self.incapac = '*[DYING]*'
+            return None
+        if self.incapac == '*[DYING]*':
+            self.incapac = '((DEAD))'
+            return None
         while True:
             try:
                 dmg = int(input('Damage dealt: '))
@@ -81,18 +81,22 @@ class File:
                 print('Only integers are supported.')
                 continue
         while True:
-            res = input('Resistance type [Toughness, Fortitude, Will]: ').upper()
-            if res != 'TOUGHNESS' and res != 'FORTITUDE' and res != 'WILL':
-                print('Only Toughness, Fortitude and Will are valid resistance types.')
+            try:
+                dado = int(input('Resistance check result: '))
+                break
+            except ValueError:
+                print('Only integers are supported.')
                 continue
-            else:
-                try:
-                    dado = int(input('Resistance check result: '))
-                    break
-                except ValueError:
-                    print('Only integers are supported.')
-                    continue
-        condit = (dmg - dado + penal_dmg) // 5
+        condit = (dmg - dado + self.dmgpe) // 5
+        if condit > 4:
+            condit = 4
         self.dmgc.append(condit)
+        self.dmgpe = 0
+        for _ in self.dmgc:
+            self.dmgpe += 1
+        if 2 in self.dmgc and 'Dazed' not in self.conds:
+            self.conds.append('Dazed')
+        if 3 in self.dmgc and '*Staggered' not in self.conds:
+            self.conds.append('*Staggered')
         if 4 in self.dmgc or self.dmgc.count(3) > 1:
             self.incapac = '*INCAPACITATED*'

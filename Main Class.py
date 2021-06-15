@@ -7,7 +7,6 @@ class Master:
         self.init = list()
         self.condict = dict()
         self.cond_dic()
-        print(self.condict)
         done = False
         while not done:
             self.chars()
@@ -29,9 +28,33 @@ class Master:
               '         Starting Combat       \n' +
               '=-' * 30 + '=\n')
         while True:
+            print('=='*30)
             self.display()
-            act = input('What do you want to do? Damage (1), Change Initative Order (2), Grant Condition (3), '
-                        'Heal (4), Define Condition (5), End Combat (6).  ')
+            print('')
+            act = input('What do you want to do? Damage (1), Heal (2), Grant Condition (3), Remove Condition (4)\n'
+                        'Change Initative Order (5), Define Condition (6), End Combat (7).  ')
+            if act == '1':
+                self.damage(input('Character being damaged: '))
+            elif act == '3':
+                self.grantcond(input('Character Name: '), input('Condition: '))
+            elif act == '4':
+                self.removcond(input('Character Name: '), input('Condition: '))
+            elif act == '5':
+                self.initswp(input('Character Name: '), input('Position in the initiative list: '))
+            elif act == '6':
+                definit = self.defcondit(input('Which condition you want me to define?  '))
+                if definit == 'not0':
+                    print('Unknown condition')
+                else:
+                    print(definit)
+            elif act == '7':
+                if input('Are you shure? Yes(1) No(2) ') == '1':
+                    exit()
+                else:
+                    continue
+            else:
+                print('Not a valid action.')
+                continue
 
     def chars(self):
         char = File()
@@ -56,7 +79,7 @@ class Master:
                         break
             for elem in self.init:
                 print(elem)
-            correct = input('Is this correct? Yes(1) No(2).')
+            correct = input('Is this correct? Yes(1) No(2). ')
             if correct == '1':
                 print('=-' * 30 + '=')
                 break
@@ -81,5 +104,54 @@ class Master:
         for item in treat2:
             self.condict[item[0]] = item[1]
 
+    def defcondit(self, x):
+        if x in self.condict.keys():
+            return self.condict[x]
+        elif '*' + x in self.condict.keys():
+            return self.condict['*' + x]
+        else:
+            return 'not0'
 
+    def initswp(self, name, pos):
+        try:
+            self.init.remove(name)
+            self.init.insert(int(pos) - 1, name)
+        except ValueError:
+            if type(pos) != int():
+                print('Invalid position.')
+            elif name not in self.init:
+                print('Character not in initiative list.')
+            else:
+                print('Something went wrong')
+
+    def damage(self, name):
+        try:
+            self.char_list[name].damage()
+        except KeyError:
+            print('Character not in Character List.')
+
+    def grantcond(self, name, cond):
+        if cond not in self.condict.keys() and '*' + cond not in self.condict.keys():
+            print('Unknown condition.')
+        else:
+            if cond not in self.condict.keys():
+                cond = '*' + cond
+            try:
+                if cond not in self.char_list[name].conds:
+                    self.char_list[name].conds.append(cond)
+                else:
+                    print(f'{name} already has the condition {cond}')
+            except KeyError:
+                print('Character not in character list.')
+
+    def removcond(self, name, cond):
+        try:
+            self.char_list[name].conds.remove(cond)
+        except KeyError:
+            print('Character not in character list')
+        except ValueError:
+            try:
+                self.char_list[name].conds.remove('*' + cond)
+            except ValueError:
+                print(f'{name} does not have the condition {cond}')
 Master()
