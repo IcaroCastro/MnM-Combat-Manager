@@ -1,7 +1,7 @@
 class File:
-    def __init__(self):
+    def __init__(self, nome):
         self.circ = 0
-        self.circ_comm = str()
+        self.comm = str()
         self.incapac = ''
         self.conds = list()
         self.dmgc = list()
@@ -22,7 +22,7 @@ class File:
                       'WILL': '',
                       'init': ''}
 
-        self.name = input('Character Name: ')
+        self.name = nome
         try:
             self.getstats(self.name)
         except FileNotFoundError:
@@ -100,3 +100,38 @@ class File:
             self.conds.append('*Staggered')
         if 4 in self.dmgc or self.dmgc.count(3) > 1:
             self.incapac = '*INCAPACITATED*'
+
+    def heal(self, degs):
+        try:
+            degrs = int(degs)
+        except ValueError:
+            print('Only positive integer degrees of success are valid.')
+            return None
+        if degrs <= 0:
+            print('Only positive integer degrees of success are valid.')
+            return None
+        if self.incapac == '*DYING*' and degrs > 0:
+            self.incapac = '*INCAPACITATED*'
+            degrs -= 1
+        if self.incapac == '*INCAPACITATED*' and degrs > 0:
+            self.incapac = ''
+            degrs -= 1
+        if '*Staggered' in self.conds and degrs > 0:
+            self.conds.remove('*Staggered')
+            degrs -= 1
+        if 'Dazed' in self.conds and degrs > 0:
+            self.conds.remove('Dazed')
+            degrs -= 1
+        self.dmgpe -= degrs
+        if self.dmgpe < 0:
+            self.dmgpe = 0
+
+    def update(self):
+        if 'Impaired' in self.conds and self.circ > -2:
+            self.circ = -2
+        else:
+            self.circ = 0
+        if 'Disabled' in self.conds and self.circ > -5:
+            self.circ = -5
+        else:
+            self.circ = 0

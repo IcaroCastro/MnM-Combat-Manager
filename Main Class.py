@@ -28,13 +28,17 @@ class Master:
               '         Starting Combat       \n' +
               '=-' * 30 + '=\n')
         while True:
+            for pers in self.char_list.values():
+                pers.update()
             print('=='*30)
             self.display()
             print('')
             act = input('What do you want to do? Damage (1), Heal (2), Grant Condition (3), Remove Condition (4)\n'
-                        'Change Initative Order (5), Define Condition (6), End Combat (7).  ')
+                        'Change Initative Order (5), Define Condition (6), Add Comentary (7), End Combat (8).  ')
             if act == '1':
                 self.damage(input('Character being damaged: '))
+            elif act == '2':
+                self.healc(input('Character being healed: '))
             elif act == '3':
                 self.grantcond(input('Character Name: '), input('Condition: '))
             elif act == '4':
@@ -48,6 +52,8 @@ class Master:
                 else:
                     print(definit)
             elif act == '7':
+                self.comm(input('Character Name: '))
+            elif act == '8':
                 if input('Are you shure? Yes(1) No(2) ') == '1':
                     exit()
                 else:
@@ -57,7 +63,7 @@ class Master:
                 continue
 
     def chars(self):
-        char = File()
+        char = File(input('Character name: '))
         if char.name in self.char_list.keys():
             print('This character is already in battle.')
             print('=-'*30+'=\n'+'-='*30+'-')
@@ -91,7 +97,8 @@ class Master:
     def display(self):
         for chars in self.init:
             print(f'{chars} {self.char_list[chars].incapac} // {self.char_list[chars].conds} '
-                  f'-{self.char_list[chars].dmgpe} // {self.char_list[chars].circ} ({self.char_list[chars].circ_comm})')
+                  f'-{self.char_list[chars].dmgpe} (tgh/fort/will) // {self.char_list[chars].circ} '
+                  f'({self.char_list[chars].comm})')
 
     def cond_dic(self):
         file = open('ConditDictionary', 'r')
@@ -154,4 +161,17 @@ class Master:
                 self.char_list[name].conds.remove('*' + cond)
             except ValueError:
                 print(f'{name} does not have the condition {cond}')
+
+    def healc(self, name):
+        try:
+            self.char_list[name].heal(input('Degrees of success: '))
+        except KeyError:
+            print('Character is not in the character list.')
+
+    def comm(self, name):
+        try:
+            self.char_list[name].comm = input('Insert commentary: ')
+        except KeyError:
+            print('Character is not in the character list.')
+
 Master()
