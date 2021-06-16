@@ -91,15 +91,20 @@ class File:
         if condit > 4:
             condit = 4
         self.dmgc.append(condit)
-        self.dmgpe = 0
-        for _ in self.dmgc:
-            self.dmgpe += 1
+        if len(self.dmgc) > self.dmgpe:
+            self.dmgpe = len(self.dmgc)
         if 2 in self.dmgc and 'Dazed' not in self.conds:
             self.conds.append('Dazed')
         if 3 in self.dmgc and '*Staggered' not in self.conds:
             self.conds.append('*Staggered')
+            if 'Dazed' not in self.conds:
+                self.conds.append('Dazed')
         if 4 in self.dmgc or self.dmgc.count(3) > 1:
             self.incapac = '*INCAPACITATED*'
+            if 'Dazed' not in self.conds:
+                self.conds.append('Dazed')
+            if '*Staggered' not in self.conds:
+                self.conds.append('*Staggered')
 
     def heal(self, degs):  # Heal character
         try:
@@ -117,10 +122,16 @@ class File:
             self.incapac = ''
             degrs -= 1
         if '*Staggered' in self.conds and degrs > 0:
+            for _ in range(0, self.dmgc.count(4)):
+                self.dmgc.remove(4)
+            for _ in range(0, self.dmgc.count(3)):
+                self.dmgc.remove(3)
             self.conds.remove('*Staggered')
             degrs -= 1
         if 'Dazed' in self.conds and degrs > 0:
             self.conds.remove('Dazed')
+            for _ in range(0, self.dmgc.count(2)):
+                self.dmgc.remove(2)
             degrs -= 1
         self.dmgpe -= degrs
         if self.dmgpe < 0:
