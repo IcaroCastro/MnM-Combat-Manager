@@ -1,13 +1,13 @@
 class File:
     def __init__(self, nome):
-        self.circ = 0
-        self.comm = str()
-        self.incapac = ''
-        self.conds = list()
-        self.dmgc = list()
-        self.dmgpe = 0
-        self.stabdice = [0, 0]
-        self.stats = {'STR': '',
+        self.circ = 0  # Circumstance modifier
+        self.comm = str()  # Commentary
+        self.incapac = ''  # Is this character incapacitated? dying? dead?
+        self.conds = list()  # Character conditions
+        self.dmgc = list()  # Damage conditions
+        self.dmgpe = 0  # Damage resistance penalty
+        self.stabdice = [0, 0]  # Dices for stabilization, for future versions
+        self.stats = {'STR': '',  # Status
                       'AGI': '',
                       'FGT': '',
                       'AWA': '',
@@ -22,13 +22,13 @@ class File:
                       'WILL': '',
                       'init': ''}
 
-        self.name = nome
-        try:
+        self.name = nome  # Character name
+        try:  # Getting the sheet if it already exists; otherwise creating it
             self.getstats(self.name)
         except FileNotFoundError:
             self.register(self.name)
 
-    def getstats(self, name):
+    def getstats(self, name):  # Get the stats from an existing sheet
         file = open(f'Sheets/{name}.txt', 'r')
         data = file.read()
         treat = data.split('\n')
@@ -39,7 +39,7 @@ class File:
                 if key in stat:
                     self.stats[key] = int(stat.split(' ')[1])
 
-    def register(self, name):
+    def register(self, name):  # Create a sheet file for a new character
         file = open(f'Sheets/{name}.txt', 'a+')
         while True:
             try:
@@ -66,7 +66,7 @@ class File:
             file.write(f'{key}: {self.stats[key]}\n')
         file.close()
 
-    def damage(self):
+    def damage(self):  # Deal damage to character
         if self.incapac == '*INCAPACITATED*':
             self.incapac = '*[DYING]*'
             return None
@@ -101,7 +101,7 @@ class File:
         if 4 in self.dmgc or self.dmgc.count(3) > 1:
             self.incapac = '*INCAPACITATED*'
 
-    def heal(self, degs):
+    def heal(self, degs):  # Heal character
         try:
             degrs = int(degs)
         except ValueError:
@@ -126,7 +126,7 @@ class File:
         if self.dmgpe < 0:
             self.dmgpe = 0
 
-    def update(self):
+    def update(self):  # Update circumstance modifier
         if 'Impaired' in self.conds and self.circ > -2:
             self.circ = -2
         else:

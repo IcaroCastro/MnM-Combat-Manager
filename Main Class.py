@@ -62,7 +62,7 @@ class Master:
                 print('Not a valid action.')
                 continue
 
-    def chars(self):
+    def chars(self):  # Add characters to combat
         char = File(input('Character name: '))
         if char.name in self.char_list.keys():
             print('This character is already in battle.')
@@ -70,7 +70,7 @@ class Master:
         else:
             self.char_list[char.name] = char
 
-    def init_list(self):
+    def init_list(self):  # Defining the list of initiative
         while True:
             print('Insert the characters in initiative order:')
             for _ in range(0, len(self.char_list.keys())):
@@ -94,13 +94,13 @@ class Master:
                 self.init.clear()
                 continue
 
-    def display(self):
+    def display(self):  # Displaying the characters in initative order with extra info
         for chars in self.init:
             print(f'{chars} {self.char_list[chars].incapac} // {self.char_list[chars].conds} '
                   f'-{self.char_list[chars].dmgpe} (tgh/fort/will) // {self.char_list[chars].circ} '
-                  f'({self.char_list[chars].comm})')
+                  f'({self.char_list[chars].comm}) ')
 
-    def cond_dic(self):
+    def cond_dic(self):  # Get all condition definitions from ConditDictionary file
         file = open('ConditDictionary', 'r')
         data = file.read()
         file.close()
@@ -111,7 +111,7 @@ class Master:
         for item in treat2:
             self.condict[item[0]] = item[1]
 
-    def defcondit(self, x):
+    def defcondit(self, x):  # Get specific condition definition
         if x in self.condict.keys():
             return self.condict[x]
         elif '*' + x in self.condict.keys():
@@ -119,7 +119,7 @@ class Master:
         else:
             return 'not0'
 
-    def initswp(self, name, pos):
+    def initswp(self, name, pos):  # Modify iniative position of a character
         try:
             self.init.remove(name)
             self.init.insert(int(pos) - 1, name)
@@ -131,13 +131,13 @@ class Master:
             else:
                 print('Something went wrong')
 
-    def damage(self, name):
+    def damage(self, name):  # Deal damage to a character
         try:
             self.char_list[name].damage()
         except KeyError:
             print('Character not in Character List.')
 
-    def grantcond(self, name, cond):
+    def grantcond(self, name, cond):  # Grant a character a condition
         if cond not in self.condict.keys() and '*' + cond not in self.condict.keys():
             print('Unknown condition.')
         else:
@@ -151,7 +151,7 @@ class Master:
             except KeyError:
                 print('Character not in character list.')
 
-    def removcond(self, name, cond):
+    def removcond(self, name, cond):  # Remove a condition from a character
         try:
             self.char_list[name].conds.remove(cond)
         except KeyError:
@@ -162,13 +162,13 @@ class Master:
             except ValueError:
                 print(f'{name} does not have the condition {cond}')
 
-    def healc(self, name):
+    def healc(self, name):  # Heal a character
         try:
             self.char_list[name].heal(input('Degrees of success: '))
         except KeyError:
             print('Character is not in the character list.')
 
-    def comm(self, name):
+    def comm(self, name):  # Give a character a commentray, displayed in the interface
         try:
             self.char_list[name].comm = input('Insert commentary: ')
         except KeyError:
