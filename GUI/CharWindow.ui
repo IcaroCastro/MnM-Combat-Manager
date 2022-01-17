@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>500</height>
+    <width>900</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>780</width>
-      <height>480</height>
+      <width>880</width>
+      <height>550</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -45,8 +45,8 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>100</width>
-       <height>100</height>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -63,8 +63,8 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>100</width>
-       <height>100</height>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -79,8 +79,8 @@
     <widget class="QLineEdit" name="charName">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>75</y>
+       <x>230</x>
+       <y>80</y>
        <width>200</width>
        <height>40</height>
       </rect>
@@ -107,8 +107,8 @@
     <widget class="QTableWidget" name="statsTable">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>150</y>
+       <x>20</x>
+       <y>250</y>
        <width>170</width>
        <height>265</height>
       </rect>
@@ -214,8 +214,8 @@
     <widget class="QTableWidget" name="statsTable_2">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>150</y>
+       <x>250</x>
+       <y>250</y>
        <width>165</width>
        <height>205</height>
       </rect>
@@ -298,7 +298,7 @@
     <widget class="QListWidget" name="conditList">
      <property name="geometry">
       <rect>
-       <x>380</x>
+       <x>480</x>
        <y>20</y>
        <width>141</width>
        <height>421</height>
@@ -313,7 +313,7 @@
     <widget class="QSpinBox" name="resModSpinbox">
      <property name="geometry">
       <rect>
-       <x>560</x>
+       <x>660</x>
        <y>50</y>
        <width>171</width>
        <height>22</height>
@@ -328,7 +328,7 @@
     <widget class="QComboBox" name="conditions">
      <property name="geometry">
       <rect>
-       <x>540</x>
+       <x>640</x>
        <y>92</y>
        <width>221</width>
        <height>21</height>
@@ -343,7 +343,7 @@
     <widget class="QPushButton" name="addCondit">
      <property name="geometry">
       <rect>
-       <x>540</x>
+       <x>640</x>
        <y>140</y>
        <width>220</width>
        <height>70</height>
@@ -374,7 +374,7 @@
     <widget class="QPushButton" name="removeCondit">
      <property name="geometry">
       <rect>
-       <x>540</x>
+       <x>640</x>
        <y>230</y>
        <width>220</width>
        <height>70</height>
@@ -405,8 +405,8 @@
     <widget class="QLabel" name="nameIndicator">
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>40</y>
+       <x>230</x>
+       <y>30</y>
        <width>91</width>
        <height>31</height>
       </rect>
@@ -430,7 +430,7 @@
     <widget class="QLabel" name="resModIndicator">
      <property name="geometry">
       <rect>
-       <x>560</x>
+       <x>660</x>
        <y>10</y>
        <width>171</width>
        <height>31</height>
@@ -455,7 +455,7 @@
     <widget class="QPushButton" name="saveButton">
      <property name="geometry">
       <rect>
-       <x>540</x>
+       <x>640</x>
        <y>370</y>
        <width>220</width>
        <height>70</height>
