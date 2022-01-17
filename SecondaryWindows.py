@@ -3,7 +3,7 @@ from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 import json
-from random import randint
+import pyautogui as pag
 
 
 class CondictWindow(qtw.QMainWindow):
@@ -62,13 +62,17 @@ class CreateCharWindow(qtw.QMainWindow):
         self.addConButt = self.findChild(qtw.QPushButton, 'addCondit')
         self.spinBox = self.findChild(qtw.QSpinBox, 'resModSpinBox')
         self.conditList = self.findChild(qtw.QListWidget, 'conditList')
-
         self.imageButton = self.findChild(qtw.QPushButton, 'findFileButton')
-        self.imageButton.clicked.connect(self.getImage)
+        self.updateButton = self.findChild(qtw.QPushButton, 'updateButt')
 
-        self.spinBox.setRange(-20, 0)
         self.conditList.addItem('-0 to Will/Fort/Tough')
 
+        self.imageButton.clicked.connect(self.getImage)
+
+        self.updateButton.clicked.connect(self.updateResMod)
+
+    def updateResMod(self):
+        self.conditList.item(0).setText(f'{self.spinBox.value()} to Will/Fort/Tough')
 
     def getImage(self):
         self.fname = qtw.QFileDialog.getOpenFileName(self, 'Open File', '', 'All Files (*)')
@@ -77,13 +81,16 @@ class CreateCharWindow(qtw.QMainWindow):
         self.token.setPixmap(pixmap)
 
     def save(self):
-        originalImage = open(self.fname[0], 'rb')
-        imageData = originalImage.read()
-        newImage = open(f'Images/{self.name.text()}.png', 'wb+')
-        newImage.write(imageData)
-        originalImage.close()
-        newImage.close()
-        del originalImage, newImage
+        if self.checkname():
+            originalImage = open(self.fname[0], 'rb')
+            imageData = originalImage.read()
+            newImage = open(f'Images/{self.name.text()}.png', 'wb+')
+            newImage.write(imageData)
+            originalImage.close()
+            newImage.close()
+            del originalImage, newImage
+        else:
+            return
 
         statData = list()
         for x in range(0, 8):
@@ -111,6 +118,18 @@ class CreateCharWindow(qtw.QMainWindow):
                 'Initiative': statData[13]
             },
             'conditions': {
-                'resMod':
+                'resMod': self.spinBox.value(),
+                'conds': [self.conditList.item(x) for x in range(1, self.conditList.count())]
             }
         }
+
+        sheet = open(f'Sheets/{self.name}.json', 'w+')
+        json.dump(self.data, fp=sheet)
+        sheet.close()
+
+    def checkname(self):
+        if self.name.text() == '':
+            pag.alert('Enter Character name.')
+            return False
+        else:
+            return True

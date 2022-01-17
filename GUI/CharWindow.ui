@@ -315,14 +315,25 @@
       <rect>
        <x>660</x>
        <y>50</y>
-       <width>171</width>
-       <height>22</height>
+       <width>70</width>
+       <height>25</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">#resModSpinbox{
 	background-color: rgb(186, 186, 186);
 }</string>
+     </property>
+     <property name="minimum">
+      <number>-20</number>
+     </property>
+     <property name="maximum">
+      <number>0</number>
      </property>
     </widget>
     <widget class="QComboBox" name="conditions">
@@ -432,7 +443,7 @@
       <rect>
        <x>660</x>
        <y>10</y>
-       <width>171</width>
+       <width>170</width>
        <height>31</height>
       </rect>
      </property>
@@ -483,6 +494,24 @@
      </property>
      <property name="text">
       <string>Save</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="updateButt">
+     <property name="geometry">
+      <rect>
+       <x>760</x>
+       <y>50</y>
+       <width>70</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>Update</string>
      </property>
     </widget>
    </widget>
