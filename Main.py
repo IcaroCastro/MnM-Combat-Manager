@@ -1,7 +1,7 @@
 import PyQt5.QtWidgets as qtw
 from PyQt5 import uic
 import sys
-from SecondaryWindows import CondictWindow
+import SecondaryWindows as sw
 
 
 class MainWindo(qtw.QMainWindow):
@@ -14,9 +14,10 @@ class MainWindo(qtw.QMainWindow):
         self.condictbutton = self.findChild(qtw.QPushButton, 'openDict')
         self.condictbutton.clicked.connect(lambda: self.wind('condict'))
 
-    def wind(self, type):
-        if type == 'condict':
-            self.condictWin = CondictWindow()
+    @classmethod
+    def wind(cls, typ):
+        if typ == 'condict':
+            cls.condictWin = sw.CondictWindow()
 
 
 
