@@ -310,39 +310,13 @@
 }</string>
      </property>
     </widget>
-    <widget class="QSpinBox" name="resModSpinbox">
-     <property name="geometry">
-      <rect>
-       <x>660</x>
-       <y>50</y>
-       <width>70</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Fixedsys</family>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#resModSpinbox{
-	background-color: rgb(186, 186, 186);
-}</string>
-     </property>
-     <property name="minimum">
-      <number>-20</number>
-     </property>
-     <property name="maximum">
-      <number>0</number>
-     </property>
-    </widget>
     <widget class="QComboBox" name="conditions">
      <property name="geometry">
       <rect>
        <x>640</x>
        <y>92</y>
-       <width>221</width>
-       <height>21</height>
+       <width>220</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -496,22 +470,19 @@
       <string>Save</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="updateButt">
+    <widget class="QLineEdit" name="resModVal">
      <property name="geometry">
       <rect>
-       <x>760</x>
+       <x>660</x>
        <y>50</y>
-       <width>70</width>
+       <width>170</width>
        <height>25</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Fixedsys</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>Update</string>
+     <property name="styleSheet">
+      <string notr="true">#resModVal{
+	background-color: rgb(186, 186, 186)
+}</string>
      </property>
     </widget>
    </widget>
