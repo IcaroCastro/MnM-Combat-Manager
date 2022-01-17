@@ -12,12 +12,19 @@ class MainWindo(qtw.QMainWindow):
         self.show()
 
         self.condictbutton = self.findChild(qtw.QPushButton, 'openDict')
+        self.charsbutton = self.findChild(qtw.QPushButton, 'openChars')
+        self.initbutton = self.findChild(qtw.QPushButton, 'openInit')
+
         self.condictbutton.clicked.connect(lambda: self.wind('condict'))
+        self.charsbutton.clicked.connect(lambda: self.wind('chars'))
+        self.initbutton.clicked.connect(lambda: self.wind('init'))
 
     @classmethod
     def wind(cls, typ):
         if typ == 'condict':
             cls.condictWin = sw.CondictWindow()
+        elif typ == 'chars':
+            cls.charsWin = sw.CharListWindow()
 
 
 

@@ -26,3 +26,19 @@ class CondictWindow(qtw.QMainWindow):
     def define(self):
         defin = self.conditions[self.combo.currentText()]
         self.textbox.setText(defin)
+
+
+class CharListWindow(qtw.QMainWindow):
+    def __init__(self):
+        super(CharListWindow, self).__init__()
+
+        uic.loadUi('GUI/CharListWindow.ui', self)
+        self.show()
+
+
+class createCharWindow(qtw.QMainWindow):
+    def __init__(self):
+        super(createCharWindow, self).__init__()
+
+        uic.loadUi('GUI/CharListWindow.ui', self)
+        self.show()
