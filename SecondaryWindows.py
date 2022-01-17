@@ -1,6 +1,6 @@
 import PyQt5.QtWidgets as qtw
 from PyQt5 import uic
-import sys
+from PyQt5.QtGui import QPixmap
 import json
 
 
@@ -35,10 +35,28 @@ class CharListWindow(qtw.QMainWindow):
         uic.loadUi('GUI/CharListWindow.ui', self)
         self.show()
 
+        self.new = self.findChild(qtw.QPushButton, 'createChar')
+        self.new.clicked.connect(lambda: self.win('new'))
 
-class createCharWindow(qtw.QMainWindow):
+    @classmethod
+    def win(cls, typ):
+        if typ == 'new':
+            cls.charWin = CreateCharWindow()
+
+
+class CreateCharWindow(qtw.QMainWindow):
     def __init__(self):
-        super(createCharWindow, self).__init__()
+        super(CreateCharWindow, self).__init__()
 
-        uic.loadUi('GUI/CharListWindow.ui', self)
+        uic.loadUi('GUI/CharWindow.ui', self)
         self.show()
+
+        self.token = self.findChild(qtw.QLabel, 'charImage')
+
+        self.imageButton = self.findChild(qtw.QPushButton, 'findFileButton')
+        self.imageButton.clicked.connect(self.getImage)
+
+    def getImage(self):
+        fname = qtw.QFileDialog.getOpenFileName(self, 'Open File', '', 'All Files (*)')
+        self.pixmap = QPixmap(fname[0])
+        self.token.setPixmap(self.pixmap)

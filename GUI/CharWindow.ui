@@ -221,9 +221,7 @@
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">#statsTable_2{
-	color: rgb(186, 186, 186);
-}</string>
+      <string notr="true"/>
      </property>
      <row>
       <property name="text">
@@ -429,7 +427,7 @@
       <string>Name:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="nameIndicator_2">
+    <widget class="QLabel" name="resModIndicator">
      <property name="geometry">
       <rect>
        <x>560</x>
