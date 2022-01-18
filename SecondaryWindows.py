@@ -67,17 +67,7 @@ class CreateCharWindow(qtw.QMainWindow):
 
         self.data = dict()
 
-        self.name = self.findChild(qtw.QLineEdit, 'charName')
-        self.token = self.findChild(qtw.QLabel, 'charImage')
-        self.stats1 = self.findChild(qtw.QTableWidget, 'statsTable')
-        self.stats2 = self.findChild(qtw.QTableWidget, 'statsTable_2')
-        self.add = self.findChild(qtw.QPushButton, 'addCondit')
-        self.resMod = self.findChild(qtw.QLineEdit, 'resModVal')
-        self.conditList = self.findChild(qtw.QListWidget, 'conditList')
-        self.imageButton = self.findChild(qtw.QPushButton, 'findFileButton')
-        self.removeConButt = self.findChild(qtw.QPushButton, 'removeCondit')
-        self.condits = self.findChild(qtw.QComboBox, 'conditions')
-        self.savButt = self.findChild(qtw.QPushButton, 'saveButton')
+        self.setupWidgets()
 
         self.myCondits = list()
 
@@ -91,6 +81,19 @@ class CreateCharWindow(qtw.QMainWindow):
         js.close()
         for x in list(conds.keys()):
             self.condits.addItem(x)
+
+    def setupWidgets(self):
+        self.name = self.findChild(qtw.QLineEdit, 'charName')
+        self.token = self.findChild(qtw.QLabel, 'charImage')
+        self.stats1 = self.findChild(qtw.QTableWidget, 'statsTable')
+        self.stats2 = self.findChild(qtw.QTableWidget, 'statsTable_2')
+        self.add = self.findChild(qtw.QPushButton, 'addCondit')
+        self.resMod = self.findChild(qtw.QLineEdit, 'resModVal')
+        self.conditList = self.findChild(qtw.QListWidget, 'conditList')
+        self.imageButton = self.findChild(qtw.QPushButton, 'findFileButton')
+        self.removeConButt = self.findChild(qtw.QPushButton, 'removeCondit')
+        self.condits = self.findChild(qtw.QComboBox, 'conditions')
+        self.savButt = self.findChild(qtw.QPushButton, 'saveButton')
 
     def addCon(self, condition):
         if condition not in self.myCondits:
