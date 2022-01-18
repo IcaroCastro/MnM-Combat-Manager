@@ -4,7 +4,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 import json
 import pyautogui as pag
-
+import os
 
 class CondictWindow(qtw.QMainWindow):
     def __init__(self):
@@ -39,6 +39,18 @@ class CharListWindow(qtw.QMainWindow):
 
         self.new = self.findChild(qtw.QPushButton, 'createChar')
         self.new.clicked.connect(lambda: self.win('new'))
+        self.lista = self.findChild(qtw.QListWidget, 'charList')
+        self.refresh = self.findChild(qtw.QPushButton, 'refreshButton')
+
+        self.update()
+
+        self.refresh.clicked.connect(self.update)
+
+    def update(self):
+        self.lista.clear()
+        allsheets = os.listdir('Sheets')
+        form = [x.replace('.json', '') for x in allsheets]
+        self.lista.addItems(form)
 
     @classmethod
     def win(cls, typ):
@@ -121,9 +133,6 @@ class CreateCharWindow(qtw.QMainWindow):
             if tex == '':
                 tex = 0
             statData.append(int(tex))
-
-        print('passei da fase da lista')
-        print(statData)
 
         self.data = {
             'name': self.name.text(),

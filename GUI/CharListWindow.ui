@@ -101,13 +101,19 @@
        <height>140</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">#charList{
 	background-color: rgb(186, 186, 186);
 }</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="editChar">
+    <widget class="QPushButton" name="refreshButton">
      <property name="geometry">
       <rect>
        <x>270</x>
@@ -117,20 +123,20 @@
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">#editChar{
+      <string notr="true">#refreshButton{
 	background-color: rgb(68, 68, 68);
 	border: 1px ;
 	border-radius: 20px
 }
 
-#editChar:hover{
+#refreshButton:hover{
 	background-color: rgb(42, 42, 42);
 	border: 1px ;
 	border-radius: 20px;
 }</string>
      </property>
      <property name="text">
-      <string>Edit</string>
+      <string>Refresh</string>
      </property>
     </widget>
    </widget>
