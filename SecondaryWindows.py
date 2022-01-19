@@ -53,9 +53,39 @@ class CharListWindow(qtw.QMainWindow):
         self.lista.addItems(form)
 
     @classmethod
-    def win(cls, typ):
+    def win(cls, typ, charname=None):
         if typ == 'new':
             cls.charWin = CreateCharWindow()
+
+
+class OpenCharWindow(qtw.QMainWindow):
+    def __init__(self, charname):
+        super(OpenCharWindow, self).__init__()
+
+        uic.loadUi('GUI/CharWindow.ui')
+        self.show()
+
+        self.setupWidgets()
+
+        file = open(f'{charname}.json', 'r')
+        self.data = json.load(file)
+        file.close()
+        del file
+
+
+
+    def setupWidgets(self):
+        self.name = self.findChild(qtw.QLineEdit, 'charName')
+        self.token = self.findChild(qtw.QLabel, 'charImage')
+        self.stats1 = self.findChild(qtw.QTableWidget, 'statsTable')
+        self.stats2 = self.findChild(qtw.QTableWidget, 'statsTable_2')
+        self.add = self.findChild(qtw.QPushButton, 'addCondit')
+        self.resMod = self.findChild(qtw.QLineEdit, 'resModVal')
+        self.conditList = self.findChild(qtw.QListWidget, 'conditList')
+        self.imageButton = self.findChild(qtw.QPushButton, 'findFileButton')
+        self.removeConButt = self.findChild(qtw.QPushButton, 'removeCondit')
+        self.condits = self.findChild(qtw.QComboBox, 'conditions')
+        self.savButt = self.findChild(qtw.QPushButton, 'saveButton')
 
 
 class CreateCharWindow(qtw.QMainWindow):
@@ -75,6 +105,7 @@ class CreateCharWindow(qtw.QMainWindow):
         self.removeConButt.clicked.connect(lambda: self.remCon(self.conditList.currentItem().text()))
         self.imageButton.clicked.connect(self.getImage)
         self.savButt.clicked.connect(self.save)
+        self.wheel.valueChanged.connect(self.updateResMod)
 
         js = open('ConditDictionary.json', 'r')
         conds = json.load(js)
@@ -88,12 +119,13 @@ class CreateCharWindow(qtw.QMainWindow):
         self.stats1 = self.findChild(qtw.QTableWidget, 'statsTable')
         self.stats2 = self.findChild(qtw.QTableWidget, 'statsTable_2')
         self.add = self.findChild(qtw.QPushButton, 'addCondit')
-        self.resMod = self.findChild(qtw.QLineEdit, 'resModVal')
         self.conditList = self.findChild(qtw.QListWidget, 'conditList')
         self.imageButton = self.findChild(qtw.QPushButton, 'findFileButton')
         self.removeConButt = self.findChild(qtw.QPushButton, 'removeCondit')
         self.condits = self.findChild(qtw.QComboBox, 'conditions')
         self.savButt = self.findChild(qtw.QPushButton, 'saveButton')
+        self.wheel = self.findChild(qtw.QDial, 'resModDial')
+        self.resMod = self.findChild(qtw.QLabel, 'resModDisplay')
 
     def addCon(self, condition):
         if condition not in self.myCondits:
@@ -167,6 +199,10 @@ class CreateCharWindow(qtw.QMainWindow):
         sheet.close()
 
         pag.alert('Saved successfully')
+
+    def updateResMod(self):
+        val = self.wheel.value()
+        self.resMod.setText(str(val))
 
     def checkname(self):
         if self.name.text() == '':
