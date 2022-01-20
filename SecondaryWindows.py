@@ -3,7 +3,7 @@ from PyQt5 import uic
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 import json
-import pyautogui as pag
+from pyautogui import alert
 import os
 
 class CondictWindow(qtw.QMainWindow):
@@ -62,7 +62,7 @@ class CharListWindow(qtw.QMainWindow):
             if item:
                 cls.opCharWin = OpenCharWindow(item.text())
             else:
-                pag.alert('Please select a character')
+                alert('Please select a character')
 
 
 class OpenCharWindow(qtw.QMainWindow):
@@ -77,14 +77,9 @@ class OpenCharWindow(qtw.QMainWindow):
 
         self.setupWidgets()
 
-        file = open(f'Sheets/{charname}.json', 'r')
-        self.data = json.load(file)
-        file.close()
-        del file
-
         self.wheel.valueChanged.connect(self.updateResMod)
 
-        self.loadfile()
+        self.loadfile(charname)
 
         self.add.clicked.connect(lambda: self.addCon(self.condits.currentText()))
         self.removeConButt.clicked.connect(lambda: self.remCon(self.conditList.currentItem().text()))
@@ -111,7 +106,12 @@ class OpenCharWindow(qtw.QMainWindow):
         for x in list(conds.keys()):
             self.condits.addItem(x)
 
-    def loadfile(self):
+    def loadfile(self, charac):
+        file = open(f'Sheets/{charac}.json', 'r')
+        self.data = json.load(file)
+        file.close()
+        del file
+
         for x, y in enumerate(self.data['stats'].values()):
             if x < 8:
                 self.stats1.item(x, 0).setText(str(y))
@@ -124,7 +124,7 @@ class OpenCharWindow(qtw.QMainWindow):
         self.token.setPixmap(pixmap)
 
         self.name.setText(self.data['name'])
-        self.wheel.setValue(int(self.data['conditions']['resMod']))
+        self.wheel.setValue(self.data['conditions']['resMod'])
 
         for x in self.data['conditions']['conds']:
             self.addCon(x)
@@ -152,7 +152,7 @@ class OpenCharWindow(qtw.QMainWindow):
 
     def checkname(self):
         if self.name.text() == '':
-            pag.alert('Enter Character name.')
+            alert('Enter Character name.')
             return False
         else:
             return True
@@ -203,16 +203,16 @@ class OpenCharWindow(qtw.QMainWindow):
                 'Initiative': statData[13]
             },
             'conditions': {
-                'resMod': self.resMod.text(),
+                'resMod': int(self.resMod.text()),
                 'conds': [self.conditList.item(x).text() for x in range(0, self.conditList.count())]
             }
         }
 
         sheet = open(f'Sheets/{self.name.text()}.json', 'w+')
-        json.dump(self.data, fp=sheet, indent=1)
+        json.dump(self.data, fp=sheet, indent=2)
         sheet.close()
 
-        pag.alert('Saved successfully')
+        alert('Saved successfully')
 
 
 class CreateCharWindow(qtw.QMainWindow):
@@ -317,16 +317,16 @@ class CreateCharWindow(qtw.QMainWindow):
                 'Initiative': statData[13]
             },
             'conditions': {
-                'resMod': self.resMod.text(),
+                'resMod': int(self.resMod.text()),
                 'conds': [self.conditList.item(x).text() for x in range(0, self.conditList.count())]
             }
         }
 
         sheet = open(f'Sheets/{self.name.text()}.json', 'w+')
-        json.dump(self.data, fp=sheet, indent=1)
+        json.dump(self.data, fp=sheet, indent=2)
         sheet.close()
 
-        pag.alert('Saved successfully')
+        alert('Saved successfully')
 
     def updateResMod(self):
         val = self.wheel.value()
@@ -334,7 +334,7 @@ class CreateCharWindow(qtw.QMainWindow):
 
     def checkname(self):
         if self.name.text() == '':
-            pag.alert('Enter Character name.')
+            alert('Enter Character name.')
             return False
         else:
             return True

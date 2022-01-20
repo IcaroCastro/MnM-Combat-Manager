@@ -479,6 +479,11 @@
        <height>100</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">#resModDial{
+	background-color: rgb(0, 0, 0)
+}</string>
+     </property>
      <property name="minimum">
       <number>-20</number>
      </property>
@@ -520,7 +525,7 @@
 }</string>
      </property>
      <property name="text">
-      <string/>
+      <string>0</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
