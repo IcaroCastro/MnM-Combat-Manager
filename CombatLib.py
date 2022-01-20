@@ -1,17 +1,19 @@
 import json
 from pyautogui import alert
 
-
+# Damage for calculating damage degrees and impact on characters
 def damage(dmgrank: int, rescheck: int, filename: str):
     if rescheck < dmgrank:
-        deg = ((dmgrank - rescheck - 1) // 5) + 1
+        deg = ((dmgrank - rescheck - 1) // 5) + 1  # Degree of damage, according to M&M's rulebook
 
+        # Loading sheet of the character being damage for conditions to be applied
         file = open(f'Sheets/{filename}.json', 'r')
         data = json.load(file)
         file.close()
 
         condits = data['conditions']
 
+        # This 'ifs' block contains all protocols for appling damage conditions according to the M&M's rulebook
         if 'Dying' in condits['conds']:
             condits['conds'].append('DEAD')
             alert(f'{filename} is dead.')
@@ -44,21 +46,24 @@ def damage(dmgrank: int, rescheck: int, filename: str):
             condits['conds'].append('Incapacitated')
             alert(f'{filename} is now Incapacitated.')
 
+        # Saving character sheet with necessary alterations
         file = open(f'Sheets/{filename}.json', 'w')
         json.dump(data, file, indent=2)
         file.close()
         del file
 
-
+# Function for calculating healing degree and impact according to M&M's rulebook
 def heal(healcheck: int, filename: str):
     if healcheck >= 10:
-        deg = (healcheck - 10) // 5 + 1
+        deg = (healcheck - 10) // 5 + 1 # Degree of healing according to M&M's rulebook
 
+        # Loading sheet of the character being damage conditions to be healed
         file = open(f'Sheets/{filename}.json', 'r')
         data = json.load(file)
         file.close()
         condits = data['conditions']
 
+        # 'while' statement appling healing degrees according to M&M's rulebook
         while deg > 0:
             if 'DEAD' in condits['conds']:
                 alert(f'{filename} is dead and cannot be healed.')
@@ -81,6 +86,7 @@ def heal(healcheck: int, filename: str):
                 condits['resMod'] += 1
                 deg -= 1
 
+        # Saving character sheet with necessary alterations applied
         file = open(f'Sheets/{filename}.json', 'w')
         json.dump(data, file, indent=2)
         file.close()
