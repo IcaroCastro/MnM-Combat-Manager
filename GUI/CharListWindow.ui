@@ -49,6 +49,11 @@
        <height>40</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">#openChar{
 	background-color: rgb(68, 68, 68);
@@ -74,6 +79,11 @@
        <width>120</width>
        <height>40</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">#createChar{
@@ -121,6 +131,11 @@
        <width>120</width>
        <height>40</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">#refreshButton{
