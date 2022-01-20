@@ -40,58 +40,12 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QListView" name="charList">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>250</width>
-       <height>390</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#charList{
-	background-color: rgb(186, 186, 186);
-}</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="openChar">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>280</y>
-       <width>100</width>
-       <height>40</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Fixedsys</family>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#openChar{
-	background-color: rgb(68, 68, 68);
-	border: 1px ;
-	border-radius: 20px
-}
-
-#openChar:hover{
-	background-color: rgb(42, 42, 42);
-	border: 1px ;
-	border-radius: 20px;
-}</string>
-     </property>
-     <property name="text">
-      <string>Open</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="addChar">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>280</y>
-       <width>100</width>
+       <x>290</x>
+       <y>270</y>
+       <width>60</width>
        <height>40</height>
       </rect>
      </property>
@@ -121,8 +75,8 @@
      <property name="geometry">
       <rect>
        <x>290</x>
-       <y>350</y>
-       <width>100</width>
+       <y>360</y>
+       <width>95</width>
        <height>40</height>
       </rect>
      </property>
@@ -213,9 +167,9 @@
     <widget class="QPushButton" name="removeChar">
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>350</y>
-       <width>100</width>
+       <x>430</x>
+       <y>270</y>
+       <width>60</width>
        <height>40</height>
       </rect>
      </property>
@@ -332,6 +286,109 @@
      </property>
      <property name="placeholderText">
       <string>Check Result</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="charCombo">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>320</y>
+       <width>200</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#charCombo{
+	background-color: rgb(186, 186, 186);
+}</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="refresh">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>270</y>
+       <width>60</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#refresh{
+	background-color: rgb(68, 68, 68);
+	border: 1px ;
+	border-radius: 20px
+}
+
+#refresh:hover{
+	background-color: rgb(42, 42, 42);
+	border: 1px ;
+	border-radius: 20px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Refresh</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="charList">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>250</width>
+       <height>390</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#charList{
+	background-color: rgb(186, 186, 186);
+}</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="delayIndex">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>360</y>
+       <width>95</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Fixedsys</family>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#delayIndex{
+	background-color: rgb(0, 0, 75, 0.2);
+	border: 1px;
+	border-radius: 15px;
+	color: rgb(0, 0, 30)
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>New Place</string>
      </property>
     </widget>
    </widget>

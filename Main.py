@@ -25,7 +25,8 @@ class MainWindo(qtw.QMainWindow):
             cls.condictWin = sw.CondictWindow()
         elif typ == 'chars':
             cls.charsWin = sw.CharListWindow()
-
+        else:
+            cls.initWin = sw.InitWindow()
 
 
 

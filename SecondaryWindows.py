@@ -1,10 +1,11 @@
 import PyQt5.QtWidgets as qtw
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtCore import Qt
 import json
 from pyautogui import alert
 import os
+import CombatLib as cl
 
 class CondictWindow(qtw.QMainWindow):
     def __init__(self):
@@ -338,3 +339,111 @@ class CreateCharWindow(qtw.QMainWindow):
             return False
         else:
             return True
+
+
+class InitWindow(qtw.QMainWindow):
+    def __init__(self):
+        super(InitWindow, self).__init__()
+
+        uic.loadUi('GUI/InitWindow.ui', self)
+        self.show()
+
+        self.adder = self.findChild(qtw.QPushButton, 'addChar')
+        self.lista = self.findChild(qtw.QListWidget, 'charList')
+        self.combo = self.findChild(qtw.QComboBox, 'charCombo')
+        self.refresh = self.findChild(qtw.QPushButton, 'refresh')
+        self.remove = self.findChild(qtw.QPushButton, 'removeChar')
+        self.delayer = self.findChild(qtw.QPushButton, 'delay')
+        self.delayIndex = self.findChild(qtw.QLineEdit, 'delayIndex')
+        self.hc = self.findChild(qtw.QLineEdit, 'healCheck')
+        self.dr = self.findChild(qtw.QLineEdit, 'dmgRank')
+        self.rc = self.findChild(qtw.QLineEdit, 'resCheck')
+        self.damager = self.findChild(qtw.QPushButton, 'damage')
+        self.healer = self.findChild(qtw.QPushButton, 'heal')
+
+        self.setupBox()
+
+        self.adder.clicked.connect(self.add)
+        self.refresh.clicked.connect(self.setupBox)
+        self.remove.clicked.connect(self.remover)
+        self.delayer.clicked.connect(self.dela)
+        self.damager.clicked.connect(self.dmg)
+        self.healer.clicked.connect(self.hp)
+
+    def setupBox(self):
+        self.combo.clear()
+        self.combo.addItems([x.replace('.json', '') for x in os.listdir('Sheets')])
+
+    def add(self):
+        char = self.combo.currentText()
+        item = qtw.QListWidgetItem()
+        item.setText(char)
+
+        self.checkIcon(item)
+
+        self.lista.addItem(item)
+
+    def remover(self):
+        char = self.lista.currentRow()
+        if char or char == 0:
+            return self.lista.takeItem(char)
+
+    def checkIcon(self, item):
+        name = item.text()
+
+        js = open(f'Sheets/{name}.json', 'r')
+        data = json.load(js)
+        js.close()
+
+        condits = data['conditions']['conds']
+
+        if 'DEAD' in condits:
+            item.setIcon(QIcon('ConditIcons/7.png'))
+        elif 'Dying' in condits:
+            item.setIcon(QIcon('ConditIcons/6.png'))
+        elif 'Incapacitated' in condits:
+            item.setIcon(QIcon('ConditIcons/5.png'))
+        elif 'Staggered(DMG)' in condits:
+            item.setIcon(QIcon('ConditIcons/4.png'))
+        elif 'Dazed(DMG)' in condits:
+            item.setIcon(QIcon('ConditIcons/3.png'))
+        elif data['conditions']['resMod'] != 0:
+            item.setIcon(QIcon('ConditIcons/2.png'))
+        else:
+            item.setIcon(QIcon('ConditIcons/1.png'))
+
+        del data, js
+
+    def dela(self):
+        row = self.lista.currentRow()
+        try:
+            newplace = int(self.delayIndex.text())
+        except ValueError:
+            alert('Please insert a non-negative integer.')
+            return
+        if row:
+            item = self.lista.takeItem(row)
+            self.lista.insertItem(newplace - 1, item)
+
+    def dmg(self):
+        try:
+            dmgrnk = int(self.dr.text())
+            rescheck = int(self.rc.text())
+        except ValueError:
+            alert('Please insert integer values')
+            return
+        char = self.lista.currentItem()
+        if char:
+            cl.damage(dmgrnk, rescheck, char.text())
+            self.checkIcon(char)
+
+    def hp(self):
+        try:
+            hel = int(self.hc.text())
+        except ValueError:
+            alert('Please insert integer value')
+            return
+        char = self.lista.currentItem()
+        if char:
+            cl.heal(hel, char.text())
+            self.checkIcon(char)

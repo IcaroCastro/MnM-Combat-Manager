@@ -60,7 +60,10 @@ def heal(healcheck: int, filename: str):
         condits = data['conditions']
 
         while deg > 0:
-            if 'Dying' in condits['conds']:
+            if 'DEAD' in condits['conds']:
+                alert(f'{filename} is dead and cannot be healed.')
+                break
+            elif 'Dying' in condits['conds']:
                 condits['conds'].remove('Dying')
                 deg -= 1
             elif 'Incapacitated' in condits['conds']:
